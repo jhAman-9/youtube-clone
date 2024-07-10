@@ -30,7 +30,7 @@ const VideoDetails = () => {
       setLoading(false);
     });
   };
-  
+
   useEffect(() => {
     document.getElementById("root").classList.add("custom-h");
     fetchVideoDetails();
