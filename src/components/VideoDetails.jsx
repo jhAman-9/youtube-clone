@@ -8,6 +8,7 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { fetchDataFromApi } from "../util/api";
 import { Context } from "../context/contextApi";
 import SuggestionVideoCard from "./SuggestionVideoCard";
+import LiveChat from "./LiveChat";
 
 const VideoDetails = () => {
   const [video, setVideo] = useState();
@@ -89,6 +90,7 @@ const VideoDetails = () => {
           </div>
         </div>
         <div className="flex flex-col py-6 px-4 overflow-y-auto lg:w-[350px] xl:w-[400px]">
+          <LiveChat/>
           {relatedVideos?.contents?.map((item, index) => {
             if (item?.type !== "video") return false;
             return <SuggestionVideoCard key={index} video={item?.video} />;
