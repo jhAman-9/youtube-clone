@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import ReactPlayer from "react-player/youtube";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import { abbreviateNumber } from "js-abbreviation-number";
@@ -9,6 +8,8 @@ import { fetchDataFromApi } from "../util/api";
 import { Context } from "../context/contextApi";
 import SuggestionVideoCard from "./SuggestionVideoCard";
 import LiveChat from "./LiveChat";
+import CommentsContainer from "./CommentsContainer";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const VideoDetails = () => {
   const [video, setVideo] = useState();
@@ -43,14 +44,23 @@ const VideoDetails = () => {
       <div className="w-full max-w-[1280px] flex flex-col lg:flex-row">
         <div className="flex flex-col lg:w-[calc(100%-350px)] xl:w-[calc(100%-400px)] px-4 py-3 lg:py-6 overflow-y-auto">
           <div className="h-[200px] md:h-[400px] lg:h-[400px] xl:h-[550px] ml-[-16px] lg:ml-0 mr-[-16px] lg:mr-0">
-            <ReactPlayer
+            {/* <ReactPlayer
               url={`https://www.youtube.com/watch?v=${id}`}
               controls
               width="100%"
               height="100%"
               style={{ backgroundColor: "#000000" }}
               playing={true}
-            />
+            /> */}
+            <iframe
+              width="100%"
+              height="500"
+              src={"https://www.youtube.com/embed/" + id}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
           <div className="text-white font-bold text-sm md:text-xl mt-4 line-clamp-2">
             {video?.title}
@@ -88,9 +98,14 @@ const VideoDetails = () => {
               </div>
             </div>
           </div>
+          <CommentsContainer />
         </div>
         <div className="flex flex-col py-6 px-4 overflow-y-auto lg:w-[350px] xl:w-[400px]">
-          <LiveChat/>
+          <div className="flex text-white mx-3 my-1 items-center">
+            <h3 className="">Top Chats </h3>
+            <MdKeyboardArrowDown className="" />
+          </div>
+          <LiveChat />
           {relatedVideos?.contents?.map((item, index) => {
             if (item?.type !== "video") return false;
             return <SuggestionVideoCard key={index} video={item?.video} />;
